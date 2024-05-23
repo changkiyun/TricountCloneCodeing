@@ -1,5 +1,6 @@
 package hello.tricountpractice.service;
 
+import hello.tricountpractice.MemberContext;
 import hello.tricountpractice.model.entity.Expense;
 import hello.tricountpractice.model.entity.Member;
 import hello.tricountpractice.model.request.AddExpenseRequest;
@@ -27,9 +28,9 @@ public class ExpenseService {
         expense.setExpenseAmount(request.getMemberExpense());
         expense.setExpenseDate(LocalDateTime.now());
 
-        Member findMember = memberRepository.findById(request.getMemberId())
-                .orElseThrow(() -> new RuntimeException("지출한 유저 아이디를 찾을 수 없습니다."));
+        Member findMember = MemberContext.getMember();
         expense.setMember(findMember);
+        findMember.setExpense(expense);
 
         return ExpenseResponse.changeResponse(expenseRepository.save(expense));
     }

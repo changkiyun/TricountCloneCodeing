@@ -1,9 +1,11 @@
 package hello.tricountpractice.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +28,17 @@ public class Member {
     @JsonIgnore // 순환 참조 방지
     private List<Settlement> settle;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference // 순환 참조 방지
     private List<Expense> expenses = new ArrayList<>();
 
     public void setSettle(Settlement settlement) {
         settle.add(settlement);
     }
+
+    public void setExpense(Expense expense) {
+        expenses.add(expense);
+    }
+
+
 }
