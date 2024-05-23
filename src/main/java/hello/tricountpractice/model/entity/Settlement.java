@@ -12,7 +12,7 @@ public class Settlement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long settleId;
-    @OneToMany
+    @ManyToMany(mappedBy = "settle")
     private List<Member> joinMember = new ArrayList<>();
     private String settleName;
 

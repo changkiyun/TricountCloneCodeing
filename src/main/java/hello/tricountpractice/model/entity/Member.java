@@ -21,10 +21,18 @@ public class Member {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "SETTLE_ID")
-    private Settlement settle;
+    @ManyToMany
+    @JoinTable(
+            name = "member_settlement",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "settlement_id")
+    )
+    private List<Settlement> settle;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Expense> expenses = new ArrayList<>();
+
+    public void setSettle(Settlement settlement) {
+        settle.add(settlement);
+    }
 }

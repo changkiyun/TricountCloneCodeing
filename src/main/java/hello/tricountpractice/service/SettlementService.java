@@ -17,6 +17,7 @@ public class SettlementService {
     public SettlementResponse create(String settlementName) {
         Settlement settlement = new Settlement();
         settlement.setSettleName(settlementName);
+        MemberContext.getMember().setSettle(settlement);
         settlement.setJoinMember(MemberContext.getMember());
 
         return SettlementResponse.changeResponse(settlementRepository.save(settlement));
