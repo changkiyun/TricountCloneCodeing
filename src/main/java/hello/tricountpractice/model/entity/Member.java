@@ -1,5 +1,6 @@
 package hello.tricountpractice.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,12 +22,8 @@ public class Member {
 
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "member_settlement",
-            joinColumns = @JoinColumn(name = "member_id"),
-            inverseJoinColumns = @JoinColumn(name = "settlement_id")
-    )
+    @ManyToMany(mappedBy = "members")
+    @JsonIgnore // 순환 참조 방지
     private List<Settlement> settle;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)

@@ -18,7 +18,7 @@ public class SettlementResponse {
         return new SettlementResponse(
                 settlement.getSettleId(),
                 settlement.getSettleName(),
-                settlement.getJoinMember()
+                settlement.getMembers()
         );
     }
 }

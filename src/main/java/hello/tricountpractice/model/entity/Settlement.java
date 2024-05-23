@@ -1,5 +1,6 @@
 package hello.tricountpractice.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,11 +13,17 @@ public class Settlement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long settleId;
-    @ManyToMany(mappedBy = "settle")
-    private List<Member> joinMember = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "member_settlement", // 조인 테이블 이름
+            joinColumns = @JoinColumn(name = "settle_id"),
+            inverseJoinColumns = @JoinColumn(name = "member_id")
+    )
+    @JsonManagedReference // 순환 참조 방지
+    private List<Member> members = new ArrayList<>();
     private String settleName;
 
-    public void setJoinMember(Member member) {
-        joinMember.add(member);
+    public void setMembers(Member member) {
+        members.add(member);
     }
 }
