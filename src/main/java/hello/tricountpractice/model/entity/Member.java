@@ -24,6 +24,10 @@ public class Member {
 
     private String name;
 
+    @OneToOne(mappedBy = "sendMember", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Balance balance;
+
     @ManyToMany(mappedBy = "members")
     @JsonIgnore // 순환 참조 방지
     private List<Settlement> settle;
