@@ -21,5 +21,10 @@ public class Expense {
     private BigDecimal expenseAmount;
     private LocalDateTime expenseDate;
 
+    public void changeMember(Member member) {
+        this.member = member;
+        member.setExpense(this);
+    }
+
 
 }
